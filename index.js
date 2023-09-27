@@ -8,9 +8,9 @@ const jobRoute = require("./routes/job");
 const bookmarkRoute = require("./routes/bookmark");
 const cloudinary = require("cloudinary").v2;
 cloudinary.config({
-	cloud_name: "dhi9lh1i7",
-	api_key: "551543554664557",
-	api_secret: "pJtiL4KvqXK7HtTnWW-zfjj-TTI",
+	cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+	api_key: process.env.CLOUDINARY_API_KEY,
+	api_secret: process.env.CLOUDINARY_API_SECRET,
 	secure: true,
 });
 

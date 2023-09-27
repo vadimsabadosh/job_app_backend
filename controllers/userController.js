@@ -1,4 +1,5 @@
 const User = require("../models/User");
+const { UploadService } = require("../services/UploadService");
 
 module.exports = {
 	updateUser: async (req, res) => {
@@ -50,6 +51,25 @@ module.exports = {
 			return res.status(200).json(users);
 		} catch (e) {
 			return res.status(500).json({ msg: e.toString() });
+		}
+	},
+	uploadPhoto: async (req, res) => {
+		const uploadService = new UploadService();
+		try {
+			const file = req.file;
+			const cloudResp = await uploadService.uploadImage(file);
+
+			const UpdateUser = await User.findByIdAndUpdate(req.user.id, {
+				profile: cloudResp.secure_url,
+			});
+
+			const filteredUser = UpdateUser.toObject();
+			delete filteredUser.password;
+			return res.status(200).json(filteredUser);
+		} catch (error) {
+			res.send({
+				message: error.message,
+			});
 		}
 	},
 };

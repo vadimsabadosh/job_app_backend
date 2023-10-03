@@ -14,6 +14,7 @@ const upload = Multer({
 router.put("/:id", verifyAndAuthorization, userContoller.updateUser);
 router.delete("/:id", verifyAndAuthorization, userContoller.deleteUser);
 router.get("/:id", verifyToken, userContoller.getUser);
+router.get("/me", verifyToken, userContoller.getMe);
 router.get("/", verifyToken, userContoller.getAllUsers);
 router.post(
 	"/upload_photo",

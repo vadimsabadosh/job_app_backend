@@ -37,6 +37,19 @@ module.exports = {
 			return res.status(500).json({ msg: e.toString() });
 		}
 	},
+	getMe: async (req, res) => {
+		try {
+			const UserModel = await User.findById(req.user.id);
+			if (!UserModel) {
+				return res.status(404).json({ msg: "User not found" });
+			}
+			const user = UserModel.toObject();
+			delete user.password;
+			return res.status(200).json(user);
+		} catch (e) {
+			return res.status(500).json({ msg: e.toString() });
+		}
+	},
 	getAllUsers: async (req, res) => {
 		try {
 			const UsersModel = await User.find();

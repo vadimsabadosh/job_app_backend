@@ -47,6 +47,14 @@ module.exports = {
 			return res.status(500).json({ msg: e.toString() });
 		}
 	},
+	getRecentJob: async (req, res) => {
+		try {
+			const JobModel = await Job.findOne().sort("-created_at");
+			return res.status(200).json(JobModel);
+		} catch (e) {
+			return res.status(500).json({ msg: e.toString() });
+		}
+	},
 	searchJobs: async (req, res) => {
 		try {
 			const results = await Job.aggregate([

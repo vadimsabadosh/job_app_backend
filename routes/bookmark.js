@@ -6,7 +6,7 @@ const {
 } = require("../middleware/verifyToken");
 
 // CREATE BOOKMARKS
-router.post("/", verifyAndAuthorization, bookmarkController.createBookmark);
+router.post("/", verifyToken, bookmarkController.createBookmark);
 
 //// DELETE BOOKMARKS
 

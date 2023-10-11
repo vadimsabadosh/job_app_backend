@@ -26,8 +26,8 @@ module.exports = {
 	},
 	getBookmarks: async (req, res) => {
 		try {
-			const userId = req.params.userId;
-			const bookmarks = await Bookmark.find({ userId });
+			const userId = req.user.id;
+			const bookmarks = await Bookmark.find({ userId }).populate("job");
 			return res.status(200).json(bookmarks);
 		} catch (e) {
 			res.status(500).json({ msg: e.toString() });

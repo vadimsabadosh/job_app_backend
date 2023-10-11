@@ -13,6 +13,6 @@ router.post("/", verifyToken, bookmarkController.createBookmark);
 router.delete("/:id", verifyToken, bookmarkController.deleteBookmark);
 
 //// GET BOOKMARKS
-router.get("/:userId", bookmarkController.getBookmarks);
+router.get("/", verifyToken, bookmarkController.getBookmarks);
 
 module.exports = router;

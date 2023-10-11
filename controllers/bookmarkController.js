@@ -18,7 +18,12 @@ module.exports = {
 	},
 	deleteBookmark: async (req, res) => {
 		try {
-			await Bookmark.findByIdAndDelete(req.params.id);
+			const userId = req.user.id;
+			const jobId = req.params.id;
+			await Bookmark.findOneAndDelete({
+				userId,
+				jobId,
+			});
 			return res.status(200).json({ msg: "Successfully deleted" });
 		} catch (e) {
 			res.status(500).json({ msg: e.toString() });

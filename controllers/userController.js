@@ -9,7 +9,6 @@ module.exports = {
 			const UpdateUser = await User.findByIdAndUpdate(id, req.body);
 
 			const filteredUser = UpdateUser.toObject();
-			delete filteredUser.password;
 			return res.status(200).json(filteredUser);
 		} catch (e) {
 			return res.status(500).json(e);
@@ -31,7 +30,6 @@ module.exports = {
 				return res.status(404).json({ msg: "User not found" });
 			}
 			const user = UserModel.toObject();
-			delete user.password;
 			return res.status(200).json(user);
 		} catch (e) {
 			return res.status(500).json({ msg: e.toString() });
@@ -44,7 +42,6 @@ module.exports = {
 				return res.status(404).json({ msg: "User not found" });
 			}
 			const user = UserModel.toObject();
-			delete user.password;
 			return res.status(200).json(user);
 		} catch (e) {
 			return res.status(500).json({ msg: e.toString() });
@@ -52,15 +49,7 @@ module.exports = {
 	},
 	getAllUsers: async (req, res) => {
 		try {
-			const UsersModel = await User.find();
-			const users = [];
-
-			for (let i = 0; i < UsersModel.length; i++) {
-				let user = UsersModel[i].toObject();
-				delete user.password;
-				users.push(user);
-			}
-
+			const users = await User.find();
 			return res.status(200).json(users);
 		} catch (e) {
 			return res.status(500).json({ msg: e.toString() });
@@ -77,7 +66,6 @@ module.exports = {
 			});
 
 			const filteredUser = UpdateUser.toObject();
-			delete filteredUser.password;
 			return res.status(200).json(filteredUser);
 		} catch (error) {
 			res.send({

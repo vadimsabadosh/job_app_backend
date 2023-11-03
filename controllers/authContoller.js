@@ -15,7 +15,6 @@ module.exports = {
 		try {
 			const savedUser = await newUser.save();
 			const user = savedUser.toObject();
-			delete user.password;
 			return res.status(201).json(user);
 		} catch (e) {
 			return res.status(500).json(e);
@@ -29,7 +28,7 @@ module.exports = {
 
 				return res.status(401).json({ msg: "Password or email is not valid" });
 			}
-			const user = await User.findOne({ email });
+			const user = await User.findOne({ email }).select("+password");
 			if (!user) {
 				console.log("!user");
 
@@ -41,8 +40,6 @@ module.exports = {
 			);
 			const dpass = decrypted.toString(crypto.enc.Utf8);
 			if (dpass !== password) {
-				console.log("dpass !== password");
-
 				return res.status(401).json({ msg: "Password or email is not valid" });
 			}
 			const verified = jwt.sign(
@@ -53,8 +50,11 @@ module.exports = {
 			delete filteredUser.password;
 			return res.status(200).json({ ...filteredUser, token: verified });
 		} catch (e) {
-			console.log("catch");
 			return res.status(500).json({ msg: e.toString() });
 		}
+	},
+	logoutUser: async (req, res) => {
+		req.clearCookie();
+		return res.status(200).json({ ok: true });
 	},
 };

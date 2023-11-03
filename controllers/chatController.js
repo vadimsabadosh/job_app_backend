@@ -17,7 +17,7 @@ module.exports = {
 					{ users: { $elemMatch: { $eq: userId } } },
 				],
 			})
-				.populate("users", "-password")
+				.populate("users")
 				.populate("latestMessage");
 
 			isChat = await User.populate(isChat, {
@@ -37,8 +37,7 @@ module.exports = {
 				const createdChat = await Chat.create(chatData);
 
 				const fullChat = await Chat.findOne({ _id: createdChat._id }).populate(
-					"users",
-					"-password"
+					"users"
 				);
 
 				res.status(200).json(fullChat);
@@ -50,8 +49,8 @@ module.exports = {
 	getChat: async (req, res) => {
 		try {
 			Chat.find({ users: { $elemMatch: { $eq: req.user.id } } })
-				.populate("users", "-password")
-				.populate("groupAdmin", "-password")
+				.populate("users")
+				.populate("groupAdmin")
 				.populate("latestMessage")
 				.sort({ updatedAt: -1 })
 				.then(async (results) => {

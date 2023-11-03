@@ -54,7 +54,6 @@ module.exports = {
 		}
 	},
 	logoutUser: async (req, res) => {
-		req.clearCookie();
 		return res.status(200).json({ ok: true });
 	},
 };

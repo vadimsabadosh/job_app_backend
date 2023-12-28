@@ -9,7 +9,6 @@ const { verifyToken } = require("../middleware/verifyToken");
  * @tags Authentication
  * @return {User} 200 - success response - application/json
  * @example response - 200 - success response example
- * [
  *   {
  *     "username": "Barry Light",
  *     "email": "casey.edwards@hhh.cc",
@@ -18,7 +17,6 @@ const { verifyToken } = require("../middleware/verifyToken");
  *     "profile": "https://example.com/barry-light.png",
  *     "location": "New York, USA"
  *   }
- * ]
  * @param {RegisterUser} request.body.required - User data
  */
 router.post("/register", authController.createUser);
@@ -30,7 +28,6 @@ router.post("/register", authController.createUser);
  * @tags Authentication
  * @return {User} 200 - success response - application/json
  * @example response - 200 - success response example
- * [
  *   {
  *     "username": "Barry Light",
  *     "email": "casey.edwards@hhh.cc",
@@ -39,7 +36,6 @@ router.post("/register", authController.createUser);
  *     "profile": "https://example.com/barry-light.png",
  *     "location": "New York, USA"
  *   }
- * ]
  * @param {LoginUser} request.body.required - User data
  */
 router.post("/login", authController.loginUser);

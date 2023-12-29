@@ -43,6 +43,14 @@ router.delete("/:id", verifyAndAdmin, jobController.deleteJob);
 router.get("/recent", jobController.getRecentJob);
 
 /**
+ * GET /api/job/hot
+ * @summary Get Hot Jobs
+ * @tags Jobs
+ * @return {array<Job>} - 200 - success response - application/json
+ */
+router.get("/hot", jobController.getHotJobs);
+
+/**
  * GET /api/job/search/{key}
  * @summary Search for Jobs
  * @tags Jobs

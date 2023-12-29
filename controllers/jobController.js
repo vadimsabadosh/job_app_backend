@@ -49,7 +49,15 @@ module.exports = {
 	},
 	getRecentJob: async (req, res) => {
 		try {
-			const JobModel = await Job.findOne().sort("-created_at");
+			const JobModel = await Job.find().sort("-created_at").limit(4);
+			return res.status(200).json(JobModel);
+		} catch (e) {
+			return res.status(500).json({ msg: e.toString() });
+		}
+	},
+	getHotJobs: async (req, res) => {
+		try {
+			const JobModel = await Job.find().limit(4);
 			return res.status(200).json(JobModel);
 		} catch (e) {
 			return res.status(500).json({ msg: e.toString() });

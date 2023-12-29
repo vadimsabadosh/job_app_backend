@@ -6,8 +6,10 @@ const expressJSDocSwagger = require("express-jsdoc-swagger");
 const mainRouter = require("./routes");
 const startSocket = require("./socket");
 const options = require("./swagger/options.js");
-
 const cloudinary = require("cloudinary").v2;
+
+dotenv.config();
+
 cloudinary.config({
 	cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
 	api_key: process.env.CLOUDINARY_API_KEY,
@@ -15,7 +17,6 @@ cloudinary.config({
 	secure: true,
 });
 
-dotenv.config();
 const port = process.env.PORT || 3000;
 
 mongoose

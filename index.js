@@ -7,6 +7,18 @@ const mainRouter = require("./routes");
 const startSocket = require("./socket");
 const options = require("./swagger/options.js");
 const cloudinary = require("cloudinary").v2;
+const cors = require("cors");
+
+const allowlist = ["http://localhost:3000", "http://127.0.0.1:3000"];
+
+const corsOptions = {
+	origin: allowlist,
+	methods: ["GET", "POST", "PUT", "DELETE"],
+	allowedHeaders: ["Content-Type", "Authorization"],
+	credentials: true,
+	maxAge: 600,
+};
+app.use(cors(corsOptions));
 
 dotenv.config();
 

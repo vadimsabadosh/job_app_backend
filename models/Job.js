@@ -10,6 +10,10 @@ const JobSchema = new mongoose.Schema(
 			type: String,
 			required: true,
 		},
+		slug: {
+			type: String,
+			required: true,
+		},
 		location: {
 			type: String,
 			required: true,

@@ -8,6 +8,8 @@ const startSocket = require("./socket");
 const options = require("./swagger/options.js");
 const cloudinary = require("cloudinary").v2;
 const cors = require("cors");
+//const Job = require("./models/Job.js");
+//const initialJobs = require("./data/initial-jobs.json");
 
 const allowlist = ["http://localhost:3000", "http://127.0.0.1:3000"];
 
@@ -39,7 +41,9 @@ mongoose
 	.catch((err) => console.log(err));
 
 app.use(express.json());
-
+app.get("/", (_, res) => {
+	res.redirect("/api-docs");
+});
 app.use("/api/", mainRouter);
 
 expressJSDocSwagger(app)(options);
@@ -48,4 +52,16 @@ const server = app.listen(port, () =>
 	console.log(`Example app listening on port ${port}!`)
 );
 
+//const importData = async () => {
+//	try {
+//		await Job.create(initialJobs);
+//		console.log("data successfully imported");
+//		// to exit the process
+//		process.exit();
+//	} catch (error) {
+//		console.log("error", error);
+//	}
+//};
+
+//importData();
 startSocket(server);

@@ -5,17 +5,26 @@ const jwt = require("jsonwebtoken");
 module.exports = {
 	createUser: async (req, res) => {
 		const { username, email, password } = req.body;
-		const hashedPass = crypto.AES.encrypt(password, process.env.CRYPTO_SECRET);
-		const newUser = new User({
-			username,
-			email,
-			password: hashedPass,
-		});
-
 		try {
+			const hashedPass = crypto.AES.encrypt(
+				password,
+				process.env.CRYPTO_SECRET
+			);
+			const newUser = new User({
+				username,
+				email,
+				password: hashedPass,
+			});
+
 			const savedUser = await newUser.save();
 			const user = savedUser.toObject();
-			return res.status(201).json(user);
+			const verified = jwt.sign(
+				{ id: user._id, isAdmin: user.isAdmin },
+				process.env.JWT_SECRET
+			);
+
+			delete user.password;
+			return res.status(200).json({ ...user, token: verified });
 		} catch (e) {
 			return res.status(500).json(e);
 		}

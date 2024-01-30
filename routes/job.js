@@ -1,6 +1,7 @@
 const router = require("express").Router();
 const jobController = require("../controllers/jobController");
 const { verifyAndAdmin } = require("../middleware/verifyToken");
+const Job = require("../models/Job.js");
 
 /**
  * POST /api/job
@@ -67,6 +68,14 @@ router.get("/search/:key", jobController.searchJobs);
  * @param {string} id.path.required - keyword search
  */
 router.get("/:id", jobController.getJob);
+/**
+ * GET /api/job/{slug}
+ * @summary Get specific Job
+ * @tags Jobs
+ * @return {Job} - 200 - success response - application/json
+ * @param {string} slug.path.required - keyword search
+ */
+router.get("/slug/:slug", jobController.getJobBySlug);
 
 /**
  * GET /api/job
@@ -75,8 +84,22 @@ router.get("/:id", jobController.getJob);
  * @return {array<Job>} - 200 - success response - application/json
  */
 router.get("/", jobController.getAllJobs);
+//router.post("/add_short_descr", async (req, res) => {
+//	try {
+//		const jobs = await Job.find();
 
-module.exports = router;
+//		for (let i = 0; i < jobs.length; i++) {
+//			const job = jobs[i];
+//			let short_description = job.description.substring(0, 100) + "...";
+//			await Job.updateOne(
+//				{ _id: job._id },
+//				{ $set: { short_description: short_description } }
+//			);
+//			console.log("router.post  ff:", ff);
+//			return res.send("saved");
+//		}
+//	} catch (error) {}
+//});
 
 /**
  * Job
@@ -92,3 +115,5 @@ module.exports = router;
  * @property {array<string>} imageUrl
  * @property {User} agentId
  */
+
+module.exports = router;
